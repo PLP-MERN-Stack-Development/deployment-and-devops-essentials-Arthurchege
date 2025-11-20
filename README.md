@@ -1,77 +1,85 @@
-# Deployment and DevOps for MERN Applications
+# Real-Time Chat Application: Deployment and DevOps (Week 7 Submission)
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+This project implements a **real-time chat application** using **React** (Vite), **Node.js/Express**, and **Socket.io**. It has been successfully deployed to production using Continuous Deployment (CD) and includes foundational DevOps practices as required for the Week 7 assignment.
 
-## Assignment Overview
+The application demonstrates full **bidirectional communication** and client-side logic ready for robust authentication and persistence.
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+---
 
-## Getting Started
+## 🏗️ Project Structure
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
+The project uses a standard monorepo structure:
 
-## Files Included
+---
 
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+## 🚀 Features Implemented & Verified
 
-## Requirements
+| Requirement Area              | Status       | Feature Implemented                                                                                                                        |
+| :---------------------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Task 1 & 2: Core Chat**     | **Complete** | **Global Chat** is functional (verified live). **Username Auth** and **Online Status** list are working.                                   |
+| **Task 3: Advanced Features** | **Complete** | **Typing Indicator** and **Private Messaging** logic (server-side) are included.                                                           |
+| **Task 4: CI/CD Pipeline**    | **Complete** | **GitHub Actions** pipeline setup (`frontend-cd.yml`) is configured to automatically build and deploy the client to Netlify on every push. |
+| **Deployment Fixes**          | **Resolved** | **CORS Policy** error resolved by setting **`CLIENT_URL`** on the Render backend.                                                          |
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+---
 
-## Deployment Platforms
+## 🌐 Deployed Application URLs
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+| Component                | Platform    | Live URL                                                           |
+| :----------------------- | :---------- | :----------------------------------------------------------------- |
+| **Frontend (Client)**    | **Netlify** | `https://wk7.netlify.app`                                          |
+| **Backend (Server/API)** | **Render**  | `https://real-time-communication-with-socket-io-990a.onrender.com` |
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+---
 
-## CI/CD Pipeline
+## 🔑 Environment Configuration
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+The following variables are required for the live deployment:
 
-## Submission
+| Variable               | Location Set                     | Value                                                              | Purpose                                                                      |
+| :--------------------- | :------------------------------- | :----------------------------------------------------------------- | :--------------------------------------------------------------------------- |
+| **`CLIENT_URL`**       | **Render Dashboard (Secret)**    | `https://wk7.netlify.app`                                          | **Fixes CORS** by telling the server which frontend origin to trust.         |
+| **`JWT_SECRET`**       | **Render Dashboard (Secret)**    | _\[Long, random generated string]_                                 | Used for secure authentication and token signing.                            |
+| **`VITE_BACKEND_URL`** | **Netlify Dashboard (Variable)** | `https://real-time-communication-with-socket-io-990a.onrender.com` | Directs the client's Socket.io connection and API calls to the live backend. |
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+---
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+## 🛡️ Task 5: Monitoring and Maintenance Documentation
 
-## Resources
+### A. Application Health Check (Task 5a)
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+The backend exposes a basic health check endpoint that monitoring services can poll:
+
+- **Endpoint:** `GET /`
+- **Status:** Returns **200 OK** with the body text "Socket.io Chat Server is running".
+- **Purpose:** Ensures the Express server process is active and running on Render.
+
+### B. Deployment Rollback Procedure (Task 5c)
+
+In case of a deployment failure on the `main` branch, the rollback procedures are documented below:
+
+| Platform               | Rollback Procedure                                                                                                                                                                          |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Frontend (Netlify)** | Navigate to the **Deploys** tab in the Netlify dashboard, select the previous successful deploy in the history list, and click **"Publish deploy"** to revert to the older build instantly. |
+| **Backend (Render)**   | Navigate to the **Deploys** tab in the Render dashboard, select the previous successful commit in the deployment history, and click **"Re-deploy previous commit."**                        |
+
+### C. Maintenance Plan
+
+- **Database:** Schedule weekly automated backups of the MongoDB Atlas cluster.
+- **Server Updates:** Plan quarterly updates for Node.js and major dependency versions.
+- **Logging:** Configure Render/external logging (e.g., Sentry) to capture errors in production for continuous maintenance.
+
+---
+
+## 📸 Screenshots and Verification
+
+                                |
+
+| **Online Status & Bidirectional Chat**
+(Screenshot1.png)
+
+| **Typing Indicator Proof**  
+ (Screenshot2.png)
+
+| **CI/CD Success** |
+(Screenshot3.png)
